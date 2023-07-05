@@ -9,5 +9,6 @@
 
   const logtail = useLogtail()
 
-  logtail.info('test')
+  logtail.log('test logtail composable')
+  console.log('test console log proxy')
 </script>

@@ -1,26 +1,42 @@
-import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 import { Browser as LogtailBrowser, Node as LogtailNode } from '@logtail/js'
+import { defineNuxtPlugin, useRuntimeConfig } from '#app'
+
+import enableConsoleProxy from '../utilities/enableConsoleProxy'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
 
-  if (!runtimeConfig.public.nuxtLogtail.sourceToken) {
+  const { sourceToken, proxyConsole } = runtimeConfig.public.nuxtLogtail
+
+  if (!sourceToken) {
     throw new Error('Missing BetterStack source token')
   }
 
-  if (typeof runtimeConfig.public.nuxtLogtail.sourceToken !== 'string') {
+  if (typeof sourceToken !== 'string') {
     throw new Error('BetterStack source token must be string')
   }
-
-  const { sourceToken } = runtimeConfig.public.nuxtLogtail
 
   let logtail: LogtailNode | LogtailBrowser | null
 
   // @ts-ignore
   if (process.server) {
     logtail = new LogtailNode(sourceToken)
-  } else {
-    logtail = new LogtailBrowser(sourceToken)
+
+    if (proxyConsole) {
+      enableConsoleProxy(logtail)
+    }
+
+    return {
+      provide: {
+        logtail
+      }
+    }
+  }
+
+  logtail = new LogtailBrowser(sourceToken)
+
+  if (proxyConsole) {
+    enableConsoleProxy(logtail)
   }
 
   return {
