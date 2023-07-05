@@ -63,21 +63,25 @@ const enableConsoleProxy: ConsoleProxyFunction = (logtail) => {
   console.log = (...args) => {
     legacyLog(...args)
     logtail.log(serializeConsoleLog(...args))
+    logtail.flush()
   }
 
   console.info = (...args) => {
     legacyInfo(...args)
     logtail.info(serializeConsoleLog(...args))
+    logtail.flush()
   }
 
   console.warn = (...args) => {
     legacyWarn(...args)
     logtail.warn(serializeConsoleLog(...args))
+    logtail.flush()
   }
 
   console.error = (...args) => {
     legacyError(...args)
     logtail.error(serializeConsoleLog(...args))
+    logtail.flush()
   }
 }
 
