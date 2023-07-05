@@ -1,4 +1,5 @@
-import { Browser as LogtailBrowser, Node as LogtailNode } from '@logtail/js'
+import { Logtail as LogtailNode } from '@logtail/node'
+import { Logtail as LogtailBrowser } from '@logtail/browser'
 import { useNuxtApp } from '#imports'
 
 export default function useLogtail(): LogtailBrowser | LogtailNode {
