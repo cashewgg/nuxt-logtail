@@ -18,22 +18,11 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   let logtail: LogtailNode | LogtailBrowser | null
 
-  // @ts-ignore
   if (process.server) {
     logtail = new LogtailNode(sourceToken)
-
-    if (proxyConsole) {
-      enableConsoleProxy(logtail)
-    }
-
-    return {
-      provide: {
-        logtail
-      }
-    }
+  } else {
+    logtail = new LogtailBrowser(sourceToken)
   }
-
-  logtail = new LogtailBrowser(sourceToken)
 
   if (proxyConsole) {
     enableConsoleProxy(logtail)
