@@ -2,59 +2,58 @@
 Get your module up and running quickly.
 
 Find and replace all on all files (CMD+SHIFT+F):
-- Name: My Module
-- Package name: my-module
-- Description: My new Nuxt module
+- Name: NuxtLogtail
+- Package name: nuxt-logtail
+- Description: Logtail implementation for nuxt 3
 -->
 
-# My Module
+# NuxtLogtail
 
 [![npm version][npm-version-src]][npm-version-href]
 [![npm downloads][npm-downloads-src]][npm-downloads-href]
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-My new Nuxt module for doing amazing things.
+Logtail implementation for nuxt 3.
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
 
-<!-- - [🏀 Online playground](https://stackblitz.com/github/your-org/my-module?file=playground%2Fapp.vue) -->
+- [🏀 Online playground](https://stackblitz.com/github/kesuio/nuxt-logtail?file=playground%2Fapp.vue)
 <!-- - [📖 &nbsp;Documentation](https://example.com) -->
 
 ## Features
 
 <!-- Highlight some of the features your module provide here -->
 
-- ⛰ &nbsp;Foo
-- 🚠 &nbsp;Bar
-- 🌲 &nbsp;Baz
+- ⛰ &nbsp;SSR compatible
+- 🚠 &nbsp;Hooks into console
 
 ## Quick Setup
 
-1. Add `my-module` dependency to your project
+1. Add `nuxt-logtail` dependency to your project
 
 ```bash
 # Using pnpm
-pnpm add -D my-module
+pnpm add -D nuxt-logtail
 
 # Using yarn
-yarn add --dev my-module
+yarn add --dev nuxt-logtail
 
 # Using npm
-npm install --save-dev my-module
+npm install --save-dev nuxt-logtail
 ```
 
-2. Add `my-module` to the `modules` section of `nuxt.config.ts`
+2. Add `nuxt-logtail` to the `modules` section of `nuxt.config.ts`
 
 ```js
 export default defineNuxtConfig({
   modules: [
-    'my-module'
+    'nuxt-logtail'
   ]
 })
 ```
 
-That's it! You can now use My Module in your Nuxt app ✨
+That's it! You can now use NuxtLogtail in your Nuxt app ✨
 
 ## Development
 
@@ -84,17 +83,17 @@ npm run release
 
 <!-- Badges -->
 
-[npm-version-src]: https://img.shields.io/npm/v/my-module/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-version-src]: https://img.shields.io/npm/v/nuxt-logtail/latest.svg?style=flat&colorA=18181B&colorB=28CF8D
 
-[npm-version-href]: https://npmjs.com/package/my-module
+[npm-version-href]: https://npmjs.com/package/nuxt-logtail
 
-[npm-downloads-src]: https://img.shields.io/npm/dm/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
+[npm-downloads-src]: https://img.shields.io/npm/dm/nuxt-logtail.svg?style=flat&colorA=18181B&colorB=28CF8D
 
-[npm-downloads-href]: https://npmjs.com/package/my-module
+[npm-downloads-href]: https://npmjs.com/package/nuxt-logtail
 
-[license-src]: https://img.shields.io/npm/l/my-module.svg?style=flat&colorA=18181B&colorB=28CF8D
+[license-src]: https://img.shields.io/npm/l/nuxt-logtail.svg?style=flat&colorA=18181B&colorB=28CF8D
 
-[license-href]: https://npmjs.com/package/my-module
+[license-href]: https://npmjs.com/package/nuxt-logtail
 
 [nuxt-src]: https://img.shields.io/badge/Nuxt-18181B?logo=nuxt.js
 
