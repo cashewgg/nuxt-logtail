@@ -1,8 +1,8 @@
-import { Logtail as LogtailNode } from '@logtail/node'
-import { Logtail as LogtailBrowser } from '@logtail/browser'
-import { useNuxtApp } from '#imports'
+import { Logtail } from '@logtail/node'
+import { Ref } from '@vue/reactivity';
+import { useNuxtApp } from '#app';
 
-export default function useLogtail(): LogtailBrowser | LogtailNode {
+export default function useLogtail(): Ref<Logtail | null> {
   const { $logtail } = useNuxtApp()
 
   return $logtail

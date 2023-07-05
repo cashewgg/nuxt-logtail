@@ -1,14 +1,15 @@
-import { Browser as LogtailBrowser, Node as LogtailNode } from '@logtail/js'
+import { Logtail } from '@logtail/node'
+import { Ref } from '@vue/reactivity';
 
-type SerializeConsoleLog = (...args) => string
-type ConsoleProxyFunction = (logtail: LogtailBrowser | LogtailNode) => void
+type SerializeConsoleLog = (...args: any[]) => string
+type EnableConsoleProxy = (logtail: Ref<Logtail | null>) => void
 
 const serializeConsoleLog: SerializeConsoleLog = (...args) => {
   const result = []
 
   // Format if first argument is a string
   if (typeof args[0] === 'string') {
-    const formattedMessage = args.shift().replace(/%[csdifoO]/g, (match) => {
+    const formattedMessage = args.shift().replace(/%[csdifoO]/g, (match: any) => {
       // Keep raw token if no substitution args left
       if (args.length === 0) return match
 
@@ -54,7 +55,7 @@ const serializeConsoleLog: SerializeConsoleLog = (...args) => {
   return result.join(' ')
 };
 
-const enableConsoleProxy: ConsoleProxyFunction = (logtail) => {
+const enableConsoleProxy: EnableConsoleProxy = (logtail) => {
   const legacyLog = console.log
   const legacyWarn = console.warn
   const legacyError = console.error
@@ -62,22 +63,22 @@ const enableConsoleProxy: ConsoleProxyFunction = (logtail) => {
 
   console.log = (...args) => {
     legacyLog(...args)
-    logtail.log(serializeConsoleLog(...args))
+    logtail.value?.log(serializeConsoleLog(...args))
   }
 
   console.info = (...args) => {
     legacyInfo(...args)
-    logtail.info(serializeConsoleLog(...args))
+    logtail.value?.info(serializeConsoleLog(...args))
   }
 
   console.warn = (...args) => {
     legacyWarn(...args)
-    logtail.warn(serializeConsoleLog(...args))
+    logtail.value?.warn(serializeConsoleLog(...args))
   }
 
   console.error = (...args) => {
     legacyError(...args)
-    logtail.error(serializeConsoleLog(...args))
+    logtail.value?.error(serializeConsoleLog(...args))
   }
 }
 

@@ -23,12 +23,18 @@ export default defineNuxtModule<ModuleOptions>({
       ...options
     })
 
-    const resolver = createResolver(import.meta.url)
+    if (!options.sourceToken) {
+      console.info('[nuxt-logtail] Disabled logtail logging, empty sourceToken')
+
+      return
+    }
+
+    const { resolve } = createResolver(import.meta.url)
 
     // Do not add the extension since the `.ts` will be transpiled to `.mjs` after `npm run prepack`
-    addPlugin(resolver.resolve('./runtime/plugin'))
+    addPlugin(resolve('./runtime/plugin'))
 
-    addImportsDir(resolver.resolve('runtime/composables'))
+    addImportsDir(resolve('runtime/composables'))
 
     extendViteConfig((config) => {
       config.plugins = config.plugins || []

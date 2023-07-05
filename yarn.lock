@@ -673,15 +673,6 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@logtail/browser@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@logtail/browser/-/browser-0.4.0.tgz#775420ff1512675508bad82b5b050af7036624e1"
-  integrity sha512-cxkb+6+sCqnRbBmpXQXDJyxnqzfyzoDbiOiecnSLGQdOHJ73eYmZun7wrW5Te/Z3UfTEMXf+0BmgmcnS53rTxg==
-  dependencies:
-    "@logtail/core" "^0.4.0"
-    "@logtail/tools" "^0.4.0"
-    cross-fetch "^3.0.4"
-
 "@logtail/core@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@logtail/core/-/core-0.4.0.tgz#a8e510756bf9fd1b2cc6c901225eb03685919ca8"

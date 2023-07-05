@@ -28,7 +28,6 @@
     "test:watch": "vitest watch"
   },
   "dependencies": {
-    "@logtail/browser": "^0.4.0",
     "@logtail/node": "^0.4.0",
     "@nuxt/kit": "^3.5.2",
     "defu": "^6.1.2",
