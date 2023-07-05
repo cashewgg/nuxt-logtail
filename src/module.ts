@@ -30,20 +30,22 @@ export default defineNuxtModule<ModuleOptions>({
 
     extendViteConfig((config) => {
       config.plugins = config.plugins || []
-      config.plugins.push(nodePolyfills({
-        // To exclude specific polyfills, add them to this list.
-        exclude: [
-          'fs', // Excludes the polyfill for `fs` and `node:fs`.
-        ],
-        // Whether to polyfill specific globals.
-        globals: {
-          Buffer: true, // can also be 'build', 'dev', or false
-          global: true,
-          process: true,
-        },
-        // Whether to polyfill `node:` protocol imports.
-        protocolImports: true,
-      }),)
+      config.plugins.push(
+        nodePolyfills({
+          // To exclude specific polyfills, add them to this list.
+          exclude: [
+            'fs', // Excludes the polyfill for `fs` and `node:fs`.
+          ],
+          // Whether to polyfill specific globals.
+          globals: {
+            Buffer: true, // can also be 'build', 'dev', or false
+            global: true,
+            process: true,
+          },
+          // Whether to polyfill `node:` protocol imports.
+          protocolImports: true,
+        })
+      )
 
       config.optimizeDeps = config.optimizeDeps || {}
       config.optimizeDeps.include = config.optimizeDeps.include || []
