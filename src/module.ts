@@ -4,6 +4,8 @@ import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
+  sourceToken: string | null | undefined
+  proxyConsole: boolean
 }
 
 export default defineNuxtModule<ModuleOptions>({
