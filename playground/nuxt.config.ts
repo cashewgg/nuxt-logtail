@@ -1,5 +1,7 @@
 export default defineNuxtConfig({
   modules: ['../src/module'],
-  myModule: {},
+  nuxtLogtail: {
+    sourceToken: process.env.BETTERSTACK_SOURCE_TOKEN,
+  },
   devtools: { enabled: true }
 })
