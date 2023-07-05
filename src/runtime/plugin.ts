@@ -1,7 +1,7 @@
 import { Browser as LogtailBrowser, Node as LogtailNode } from '@logtail/js'
 import { defineNuxtPlugin, useRuntimeConfig } from '#app'
 
-import enableConsoleProxy from '../utilities/enableConsoleProxy'
+import enableConsoleProxy from './utilities/enableConsoleProxy'
 
 export default defineNuxtPlugin((nuxtApp) => {
   const runtimeConfig = useRuntimeConfig();
