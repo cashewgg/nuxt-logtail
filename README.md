@@ -19,6 +19,7 @@ Logtail implementation for nuxt 3.
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
 
 - [🏀 Online playground](https://stackblitz.com/github/kesuio/nuxt-logtail?file=playground%2Fapp.vue)
+
 <!-- - [📖 &nbsp;Documentation](https://example.com) -->
 
 ## Features
@@ -49,11 +50,22 @@ npm install --save-dev nuxt-logtail
 export default defineNuxtConfig({
   modules: [
     'nuxt-logtail'
-  ]
+  ],
+
+  nuxtLogtail: {
+    // javascript source token from BetterStack
+    sourceToken: process.env.BETTERSTACK_SOURCE_TOKEN,
+    // set true/false depending on expected behaviour
+    proxyConsole: false,
+  }
 })
 ```
 
 That's it! You can now use NuxtLogtail in your Nuxt app ✨
+
+## Usage
+
+Exposes a `useLogtail` composable, that can be used for logging, returns ether logtail browser or logtail node instance.
 
 ## Development
 
