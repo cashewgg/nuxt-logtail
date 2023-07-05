@@ -36,7 +36,7 @@ export default defineNuxtModule<ModuleOptions>({
         }),
       ]
       viteInlineConfig.optimizeDeps = {
-        ...(viteInlineConfig.optimizeDeps || {}),
+        ...viteInlineConfig.optimizeDeps,
         include: ['stack-trace', 'cross-fetch']
       }
     },
