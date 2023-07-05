@@ -19,7 +19,7 @@ export default defineNuxtModule<ModuleOptions>({
   hooks: {
     'vite:extendConfig': (viteInlineConfig) => {
       viteInlineConfig.plugins = [
-        ...viteInlineConfig.plugins,
+        ...(viteInlineConfig.plugins || []),
         nodePolyfills({
           // To exclude specific polyfills, add them to this list.
           exclude: [
