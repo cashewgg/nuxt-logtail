@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "@logtail/js": "^0.4.0",
-    "@nuxt/kit": "^3.5.2"
+    "@nuxt/kit": "^3.5.2",
+    "defu": "^6.1.2"
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
