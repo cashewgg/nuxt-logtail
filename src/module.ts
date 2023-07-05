@@ -1,4 +1,4 @@
-import { addImportsDir, addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
+import { addImportsDir, addPlugin, createResolver, defineNuxtModule, extendViteConfig } from '@nuxt/kit'
 import { defu } from 'defu'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
@@ -16,31 +16,6 @@ export default defineNuxtModule<ModuleOptions>({
     sourceToken: null,
     proxyConsole: false,
   },
-  hooks: {
-    'vite:extendConfig': (viteInlineConfig) => {
-      viteInlineConfig.plugins = [
-        ...(viteInlineConfig.plugins || []),
-        nodePolyfills({
-          // To exclude specific polyfills, add them to this list.
-          exclude: [
-            'fs', // Excludes the polyfill for `fs` and `node:fs`.
-          ],
-          // Whether to polyfill specific globals.
-          globals: {
-            Buffer: true, // can also be 'build', 'dev', or false
-            global: true,
-            process: true,
-          },
-          // Whether to polyfill `node:` protocol imports.
-          protocolImports: true,
-        }),
-      ]
-      viteInlineConfig.optimizeDeps = {
-        ...viteInlineConfig.optimizeDeps,
-        include: ['stack-trace', 'cross-fetch']
-      }
-    },
-  },
   setup(options, nuxt) {
     nuxt.options.runtimeConfig.public.nuxtLogtail = defu(nuxt.options.runtimeConfig.public.nuxtLogtail, {
       ...options
@@ -52,5 +27,31 @@ export default defineNuxtModule<ModuleOptions>({
     addPlugin(resolver.resolve('./runtime/plugin'))
 
     addImportsDir(resolver.resolve('runtime/composables'))
+
+    extendViteConfig((config) => {
+      config.plugins = config.plugins || []
+      config.plugins.push(nodePolyfills({
+        // To exclude specific polyfills, add them to this list.
+        exclude: [
+          'fs', // Excludes the polyfill for `fs` and `node:fs`.
+        ],
+        // Whether to polyfill specific globals.
+        globals: {
+          Buffer: true, // can also be 'build', 'dev', or false
+          global: true,
+          process: true,
+        },
+        // Whether to polyfill `node:` protocol imports.
+        protocolImports: true,
+      }),)
+
+      config.optimizeDeps = config.optimizeDeps || {}
+      config.optimizeDeps.include = config.optimizeDeps.include || []
+      config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
+      config.optimizeDeps.include.push(
+        'stack-trace',
+        'cross-fetch'
+      )
+    })
   }
 })
