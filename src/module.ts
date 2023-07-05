@@ -17,7 +17,7 @@ export default defineNuxtModule<ModuleOptions>({
     proxyConsole: false,
   },
   hooks: {
-    'vite:extendConfig': (viteInlineConfig: ViteConfig) => {
+    'vite:extendConfig': (viteInlineConfig) => {
       viteInlineConfig.plugins = [
         ...viteInlineConfig.plugins,
         nodePolyfills({
