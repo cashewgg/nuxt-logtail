@@ -1,5 +1,6 @@
 import { addImportsDir, addPlugin, createResolver, defineNuxtModule } from '@nuxt/kit'
 import { defu } from 'defu'
+import { nodePolyfills } from 'vite-plugin-node-polyfills'
 
 // Module options TypeScript interface definition
 export interface ModuleOptions {
@@ -14,6 +15,27 @@ export default defineNuxtModule<ModuleOptions>({
   defaults: {
     sourceToken: null,
     proxyConsole: false,
+  },
+  hooks: {
+    'vite:extendConfig': (viteInlineConfig: ViteConfig) => {
+      viteInlineConfig.plugins = [
+        ...viteInlineConfig.plugins,
+        nodePolyfills({
+          // To exclude specific polyfills, add them to this list.
+          exclude: [
+            'fs', // Excludes the polyfill for `fs` and `node:fs`.
+          ],
+          // Whether to polyfill specific globals.
+          globals: {
+            Buffer: true, // can also be 'build', 'dev', or false
+            global: true,
+            process: true,
+          },
+          // Whether to polyfill `node:` protocol imports.
+          protocolImports: true,
+        }),
+      ]
+    },
   },
   setup(options, nuxt) {
     nuxt.options.runtimeConfig.public.nuxtLogtail = defu(nuxt.options.runtimeConfig.public.nuxtLogtail, {
