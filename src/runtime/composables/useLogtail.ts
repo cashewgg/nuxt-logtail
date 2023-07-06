@@ -1,6 +1,6 @@
 import { Logtail } from '@logtail/browser'
 import { ref, Ref } from '@vue/reactivity'
-import { useRuntimeConfig } from '#app'
+import { useRuntimeConfig } from '#imports'
 
 type SerializeConsoleLog = (...args: any[]) => string
 type NuxtLogtailLogFunction = (...args: any[]) => void

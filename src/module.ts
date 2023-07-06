@@ -1,4 +1,5 @@
-import { addImportsDir, createResolver, defineNuxtModule, extendViteConfig } from '@nuxt/kit'
+import { fileURLToPath } from 'url'
+import { addImports, addTemplate, createResolver, defineNuxtModule, extendViteConfig, resolveModule } from '@nuxt/kit'
 import { defu } from 'defu'
 
 // Module options TypeScript interface definition
@@ -16,6 +17,9 @@ export default defineNuxtModule<ModuleOptions>({
     sourceToken: null
   },
   setup(options, nuxt) {
+    const { resolve } = createResolver(import.meta.url)
+    const resolveRuntimeModule = (path: string) => resolveModule(path, { paths: resolve('./runtime') })
+
     nuxt.options.runtimeConfig.public.nuxtLogtail = defu(nuxt.options.runtimeConfig.public.nuxtLogtail, {
       ...options
     })
@@ -24,9 +28,35 @@ export default defineNuxtModule<ModuleOptions>({
       console.info('Logtail logging disabled, empty sourceToken')
     }
 
-    const { resolve } = createResolver(import.meta.url)
+    // Transpile runtime
+    const runtimeDir = fileURLToPath(new URL('./runtime', import.meta.url))
+    nuxt.options.build.transpile.push(runtimeDir)
 
-    addImportsDir(resolve('runtime/composables'))
+    // Add NuxtLogtail composables
+    addImports({
+      name: 'useLogtail',
+      as: 'useLogtail',
+      from: resolve(runtimeDir, 'composables/useLogtail')
+    })
+
+    nuxt.hook('nitro:config', (nitroConfig) => {
+      nitroConfig.alias = nitroConfig.alias || {}
+
+      // Inline module runtime in Nitro bundle
+      nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
+        inline: [resolve('./runtime')]
+      })
+      nitroConfig.alias['#nuxtLogtail/server'] = resolveRuntimeModule('./composables')
+    })
+
+    addTemplate({
+      filename: 'types/nuxt-logtail.d.ts',
+      getContents: () => [
+        'declare module \'#nuxtLogtail/server\' {',
+        `  const useLogtail: typeof import('${resolve('./runtime/composables')}').useLogtail`,
+        '}'
+      ].join('\n')
+    })
 
     extendViteConfig((config) => {
       config.optimizeDeps = config.optimizeDeps || {}
