@@ -1,6 +1,6 @@
 {
   "name": "nuxt-logtail",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Logtail implementation for nuxt 3",
   "repository": "kesuio/nuxt-logtail",
   "license": "MIT",
