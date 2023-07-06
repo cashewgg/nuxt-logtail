@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url'
-import { addImports, addTemplate, createResolver, defineNuxtModule, extendViteConfig, resolveModule } from '@nuxt/kit'
+import { addImportsDir, addTemplate, createResolver, defineNuxtModule, extendViteConfig, resolveModule } from '@nuxt/kit'
 import { defu } from 'defu'
 
 // Module options TypeScript interface definition
@@ -33,11 +33,7 @@ export default defineNuxtModule<ModuleOptions>({
     nuxt.options.build.transpile.push(runtimeDir)
 
     // Add NuxtLogtail composables
-    addImports({
-      name: 'useLogtail',
-      as: 'useLogtail',
-      from: resolve(runtimeDir, 'composables/useLogtail')
-    })
+    addImportsDir(resolve(runtimeDir, 'composables'))
 
     nuxt.hook('nitro:config', (nitroConfig) => {
       nitroConfig.alias = nitroConfig.alias || {}
@@ -46,14 +42,14 @@ export default defineNuxtModule<ModuleOptions>({
       nitroConfig.externals = defu(typeof nitroConfig.externals === 'object' ? nitroConfig.externals : {}, {
         inline: [resolve('./runtime')]
       })
-      nitroConfig.alias['#nuxtLogtail/server'] = resolveRuntimeModule('./composables')
+      nitroConfig.alias['#nuxtLogtail/server'] = resolveRuntimeModule('./server')
     })
 
     addTemplate({
       filename: 'types/nuxt-logtail.d.ts',
       getContents: () => [
         'declare module \'#nuxtLogtail/server\' {',
-        `  const useLogtail: typeof import('${resolve('./runtime/composables')}').useLogtail`,
+        `  const useLogtail: typeof import('${resolve('./runtime/server')}').useLogtail`,
         '}'
       ].join('\n')
     })

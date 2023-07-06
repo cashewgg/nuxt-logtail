@@ -1,5 +1,4 @@
 import { Logtail } from '@logtail/browser'
-import { ref, Ref } from '@vue/reactivity'
 import { useRuntimeConfig } from '#imports'
 
 type SerializeConsoleLog = (...args: any[]) => string
@@ -63,19 +62,12 @@ const serializeConsoleLog: SerializeConsoleLog = (...args) => {
   return result.join(' ')
 }
 
-export default function useLogtail(): Ref<NuxtLogtailLogger | null> {
+export default function useLogtail(): NuxtLogtailLogger {
   const runtimeConfig = useRuntimeConfig()
-  const logger: Ref<NuxtLogtailLogger | null> = ref(null)
-
-  if (logger.value) {
-    return logger
-  }
-
   const { sourceToken } = runtimeConfig.public.nuxtLogtail
-
   const logtail: Logtail | null = sourceToken ? new Logtail(sourceToken) : null
 
-  logger.value = {
+  const logger: NuxtLogtailLogger = {
     log(...args) {
       console.log(...args)
 

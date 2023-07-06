@@ -13,6 +13,6 @@
   const { data } = await useFetch('/api/ping')
 
   onMounted(() => {
-    logger.value?.log('test composable')
+    logger.log('test composable')
   })
 </script>
