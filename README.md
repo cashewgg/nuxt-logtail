@@ -55,8 +55,6 @@ export default defineNuxtConfig({
   nuxtLogtail: {
     // javascript source token from BetterStack
     sourceToken: process.env.BETTERSTACK_SOURCE_TOKEN,
-    // set true/false depending on expected behaviour
-    proxyConsole: false,
   }
 })
 ```

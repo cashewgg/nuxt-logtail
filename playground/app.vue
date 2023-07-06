@@ -5,15 +5,14 @@
 </template>
 
 <script setup>
-  import { useLogtail } from '#imports';
+  import { useLogtail, onMounted } from '#imports';
   import { useFetch } from '#app';
 
-  const logtail = useLogtail()
+  const logger = useLogtail()
 
   const { data } = await useFetch('/api/ping')
 
-  console.log(data.value)
-
-  logtail.value?.log('test logtail composable')
-  console.log('test console log proxy')
+  onMounted(() => {
+    logger.value?.log('test composable')
+  })
 </script>

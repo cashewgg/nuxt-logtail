@@ -5,8 +5,8 @@
 <script setup>
   import { useLogtail } from '#imports';
 
-  const logtail = useLogtail()
+  const logger = useLogtail()
 
-  logtail.log('test logtail composable')
+  logger.value.log('test logtail composable')
   console.log('test console log proxy')
 </script>
