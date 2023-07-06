@@ -21,9 +21,7 @@ export default defineNuxtModule<ModuleOptions>({
     })
 
     if (!options.sourceToken) {
-      console.info('[nuxt-logtail] Disabled logtail logging, empty sourceToken')
-
-      return
+      console.info('Logtail logging disabled, empty sourceToken')
     }
 
     const { resolve } = createResolver(import.meta.url)
@@ -35,7 +33,6 @@ export default defineNuxtModule<ModuleOptions>({
       config.optimizeDeps.include = config.optimizeDeps.include || []
       config.optimizeDeps.exclude = config.optimizeDeps.exclude || []
       config.optimizeDeps.include.push(
-        'stack-trace',
         'cross-fetch'
       )
     })

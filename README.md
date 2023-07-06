@@ -14,7 +14,7 @@ Find and replace all on all files (CMD+SHIFT+F):
 [![License][license-src]][license-href]
 [![Nuxt][nuxt-src]][nuxt-href]
 
-Logtail implementation for nuxt 3.
+Logtail implementation for nuxt 3, if no source token provided, just behaves like the default console
 
 - [✨ &nbsp;Release Notes](/CHANGELOG.md)
 

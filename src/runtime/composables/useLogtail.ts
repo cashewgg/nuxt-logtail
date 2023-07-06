@@ -1,6 +1,6 @@
 import { Logtail } from '@logtail/browser'
-import { ref, Ref } from '@vue/reactivity';
-import { useRuntimeConfig } from '#app';
+import { ref, Ref } from '@vue/reactivity'
+import { useRuntimeConfig } from '#app'
 
 type SerializeConsoleLog = (...args: any[]) => string
 type NuxtLogtailLogFunction = (...args: any[]) => void
@@ -61,42 +61,58 @@ const serializeConsoleLog: SerializeConsoleLog = (...args) => {
   result.push(...formattedArgs)
 
   return result.join(' ')
-};
+}
 
 export default function useLogtail(): Ref<NuxtLogtailLogger | null> {
   const runtimeConfig = useRuntimeConfig()
-  const logger: Ref<NuxtLogtailLogger | null> = ref(null);
-
-  const { sourceToken } = runtimeConfig.public.nuxtLogtail
-
-  if (typeof sourceToken !== 'string') {
-    throw new Error('BetterStack source token must be string')
-  }
+  const logger: Ref<NuxtLogtailLogger | null> = ref(null)
 
   if (logger.value) {
     return logger
   }
 
-  const logtail = new Logtail(sourceToken)
+  const { sourceToken } = runtimeConfig.public.nuxtLogtail
+
+  const logtail: Logtail | null = sourceToken ? new Logtail(sourceToken) : null
 
   logger.value = {
     log(...args) {
       console.log(...args)
+
+      if (!logtail) {
+        return
+      }
+
       logtail.log(serializeConsoleLog(...args))
     },
 
     info(...args) {
       console.info(...args)
+
+      if (!logtail) {
+        return
+      }
+
       logtail.info(serializeConsoleLog(...args))
     },
 
     warn(...args) {
       console.warn(...args)
+
+      if (!logtail) {
+        return
+      }
+
       logtail.warn(serializeConsoleLog(...args))
     },
 
     error(...args) {
       console.error(...args)
+
+      if (!logtail) {
+        return
+      }
+
       logtail.error(serializeConsoleLog(...args))
     }
   }
